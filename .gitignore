@@ -1,0 +1,6 @@
+/vendor
+/bower_components
+/node_modules
+/.env
+/quiz.pub
+/quiz
