@@ -12,6 +12,7 @@ use App\User;
 use App\UserRecord;
 use App\Result;
 use App\Favorite;
+use App\Score;
 
 use yajra\Datatables\Datatables;
 
@@ -113,9 +114,30 @@ class QuestionController extends Controller
 
         $UserRecord = UserRecord::where('user_id',  $data['user_id'])->get();
         $StageRecord = $UserRecord->where('stages_id', $data['stages_id'])->first();
+
+        $CrementRecord = UserRecord::where('user_id', $data['user_id'])
+                                ->where('stages_id', $data['stages_id'])
+                                ->max('stage_score');
+        $Crement = $data['score'] - $CrementRecord;
+
         $User = User::where('id', $data['user_id'])->first();
-        if (count($UserRecord) == 0 || $StageRecord == null) {
+        if (count($UserRecord) == 0 || $StageRecord == 'null') {
             $User->increment('score', $data['score']);
+        } else if ($Crement > 0) {
+            $User->increment('score', $Crement); 
+        }
+
+        $UserSrcoreRecord = Score::where('user_id', $data['user_id'])
+                                ->where('category_id', floor($data['stages_id']/100));
+        if (count($UserSrcoreRecord->get()) == 0) {
+            Score::create([
+                'user_id' => $data['user_id'],
+                'user_name' => $User['name'],
+                'category_id' => floor($data['stages_id']/100),
+                'score' => $data['score']
+            ]);
+        } else if ($Crement > 0) {
+            $UserSrcoreRecord->first()->increment('score', $Crement);
         }
 
         UserRecord::create([

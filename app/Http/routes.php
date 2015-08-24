@@ -103,6 +103,7 @@ Route::any('stage/getCategoryList', 'CategoryController@getCategoryList');
 Route::any('stage/getStageList', 'StageController@getStageList');
 Route::any('question/getQAList', 'QuestionController@getQAList');
 Route::any('question/uploadResult', 'QuestionController@uploadResult');
+Route::any('rank', 'RankController@getRank');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
