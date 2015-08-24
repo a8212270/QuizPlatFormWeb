@@ -77,11 +77,14 @@ Route::get('/documentation', function()
 	return View::make('documentation');
 });
 
-Route::get('/questions/create', ['middleware' => 'login', function()
-{
-	return View::make('questions/create');
-}]);
+// Route::get('/questions/create', ['middleware' => 'login', function()
+// {
+// 	return View::make('questions/create');
+// }]);
 
+
+Route::get('questions/create', ['middleware' => 'login', 'uses' => 'QuestionController@create']);
+Route::post('questions', 'QuestionController@store');
 Route::get('/questions/show', ['middleware' => 'login', 'uses' => 'QuestionController@show']);
 Route::get('/questions/{id}/edit', ['middleware' => 'login', 'uses' => 'QuestionController@edit']);
 Route::patch('/questions/{id}', 'QuestionController@update');
