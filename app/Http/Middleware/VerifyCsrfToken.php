@@ -25,6 +25,7 @@ class VerifyCsrfToken extends BaseVerifier {
                 'question/getQAList',
                 'questions',
                 'question/uploadResult',
+                'rank',
     		];
     		foreach ($skips as $route) {
     			if ($request->is($route)) {

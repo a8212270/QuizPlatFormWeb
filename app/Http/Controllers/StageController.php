@@ -35,7 +35,7 @@ class StageController extends Controller
             }
         } else {
             for ($i = 0; $i < count($Stage); $i++) {
-                $UserAccuracy = UserRecord::orderBy('stage_score', 'desc')->where('stages_id', $Stage[$i]['id'])->first();
+                $UserAccuracy = UserRecord::orderBy('stage_score', 'desc')->where('stages_id', $Stage[$i]['id'])->where('user_id',  $user['id'])->first();
                 if ($UserAccuracy == null) {
                     $Stage[$i]['accuracy'] = 0;
                 } else {
@@ -44,7 +44,7 @@ class StageController extends Controller
             }
 
             for ($i = 0; $i < count($Stage); $i++) {
-                $UserStatus = UserRecord::orderBy('stage_score', 'desc')->where('stages_id', $Stage[$i]['id'])->first();
+                $UserStatus = UserRecord::orderBy('stage_score', 'desc')->where('stages_id', $Stage[$i]['id'])->where('user_id',  $user['id'])->first();
                 if ($UserStatus == null) {
                     $Stage[$i]['status'] = 4;
                 } else {
