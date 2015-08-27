@@ -84,29 +84,24 @@ Route::get('/documentation', function()
 
 
 Route::get('questions/create', ['middleware' => 'login', 'uses' => 'QuestionController@create']);
+Route::get('questions/show', ['middleware' => 'login', 'uses' => 'QuestionController@show']);
+Route::get('questions/{id}/edit', ['middleware' => 'login', 'uses' => 'QuestionController@edit']);
+Route::any('question/getQAList', 'QuestionController@getQAList');
+Route::any('question/uploadResult', 'QuestionController@uploadResult');
+Route::patch('questions/{id}', 'QuestionController@update');
 Route::post('questions', 'QuestionController@store');
-Route::get('/questions/show', ['middleware' => 'login', 'uses' => 'QuestionController@show']);
-Route::get('/questions/{id}/edit', ['middleware' => 'login', 'uses' => 'QuestionController@edit']);
-Route::patch('/questions/{id}', 'QuestionController@update');
 
 Route::get('questions/showResult', ['middleware' => 'login', 'uses' => 'QuestionController@showResult']);
-
-/*Route::get('/questions/show', function()
-{
-	return View::make('questions/show');
-});*/
-
-//Route::get('questions/show', 'QuestionController@show');
-
-//Route::resource('questions','QuestionController');
 
 Route::post('mobileRegister', 'MobileController@postRegister');
 Route::post('mobileLogin', 'MobileController@postLogin');
 Route::any('stage/getCategoryList', 'CategoryController@getCategoryList');
 Route::any('stage/getStageList', 'StageController@getStageList');
-Route::any('question/getQAList', 'QuestionController@getQAList');
-Route::any('question/uploadResult', 'QuestionController@uploadResult');
+
 Route::any('rank', 'RankController@getRank');
+
+Route::any('favorite/getFavoriteList', 'FavoriteController@getFavoriteList');
+Route::any('favorite/uploadFavoriteList', 'FavoriteController@uploadFavoriteList');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

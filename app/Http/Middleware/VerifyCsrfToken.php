@@ -26,6 +26,8 @@ class VerifyCsrfToken extends BaseVerifier {
                 'questions',
                 'question/uploadResult',
                 'rank',
+                'favorite/getFavoriteList',
+                'favorite/uploadFavoriteList',
     		];
     		foreach ($skips as $route) {
     			if ($request->is($route)) {
