@@ -14,7 +14,7 @@ class FavoriteController extends Controller {
 	{
 		$data = $request->all();
 
-		$list = Favorite::where('user_id', 1)->get();
+		$list = Favorite::where('user_id', $data['user_id'])->get();
 
 		for ($i=0; $i < count($list); $i++) {
 			$list[$i]['question'] = Question::where('id', $list[$i]['question_id'])->first();
