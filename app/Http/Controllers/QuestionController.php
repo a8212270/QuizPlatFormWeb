@@ -114,11 +114,17 @@ class QuestionController extends Controller
                 'answer' => $saveResult[1],
                 'second' => $saveResult[2]
             ]);
+
             if ($saveResult[3] == '1') {
-                Favorite::create([
+                $FavoriteRecord = Favorite::where('user_id', $data['user_id'])->where('question_id', $saveResult[0])->first();
+                if ($FavoriteRecord == null || $FavoriteRecord == 'null') {
+                    Favorite::create([
                     'user_id' => $data['user_id'],
                     'question_id' => $saveResult[0]
-                ]);  
+                    ]); 
+                }  
+            } else if ($saveResult[3] == '0'){
+                Favorite::where('user_id', $data['user_id'])->where('question_id', $saveResult[0])->delete();
             }
         }
 
