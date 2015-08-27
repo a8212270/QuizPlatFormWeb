@@ -21,15 +21,25 @@ class QuestionController extends Controller
     public function getQAList(Request $request)
     {
     	$data = $request->all();
-    	//if ($data['check'] == '101') {
+
         $question = Question::orderByRaw("RAND()")->where('stages_id', $data['stagesId'])->get()->take(5);
-        // $question = Question::orderByRaw("RAND()")->where('stages_id', 101)->get()->take(5);
-    		return response()->json([
+        //->take(5)
+
+        for ($i = 0; $i < count($question); $i++) {
+            $checkFavorite = Favorite::where('user_id', $data['user_id'])->where('question_id', $question[$i]['id'])->first();
+            if ($checkFavorite == null) {
+                $question[$i]['favorite'] = 0;
+            } else {
+                $question[$i]['favorite'] = 1;
+            }
+            
+        }
+
+    	return response()->json([
             'RetCode' => '1', 
             'Content' => [
-            'image' => 'ZH4itjY.jpg',
-                'questions' => 
-                    $question
+                'image' => 'ZH4itjY.jpg',
+                'questions' => $question,
                 ]
             ]);
     }
@@ -121,7 +131,7 @@ class QuestionController extends Controller
         $Crement = $data['score'] - $CrementRecord;
 
         $User = User::where('id', $data['user_id'])->first();
-        if (count($UserRecord) == 0 || $StageRecord == 'null') {
+        if (count($UserRecord) == 0 || $StageRecord == 'null' || $StageRecord == null) {
             $User->increment('score', $data['score']);
         } else if ($Crement > 0) {
             $User->increment('score', $Crement); 

@@ -14,23 +14,44 @@ class FavoriteController extends Controller {
 	{
 		$data = $request->all();
 
-		$list = Favorite::where('user_id', $data['user_id'])->get();
+		$Favoritelist = Favorite::where('user_id', $data['user_id'])->get();
 
-		for ($i=0; $i < count($list); $i++) {
-			$list[$i]['question'] = Question::where('id', $list[$i]['question_id'])->first();
-			$list[$i]['question']['fuckyou'] = 0;
-			$list[$i]['question']['fuck'] = 0;
+		for ($i = 0; $i < count($Favoritelist); $i++) {
+			$Favoritelist[$i]['question'] = Question::where('id', $Favoritelist[$i]['question_id'])->first();
+			$Favoritelist[$i]['question']['fuckyou'] = 0;
+			$Favoritelist[$i]['question']['fuck'] = 0;
 
 		}
 
 		return response()->json([
             'RetCode' => '1', 
-            'Content' => $list
+            'Content' => $Favoritelist
             ]);
 	}
 
-	public function uploadFavoriteList(Request $request)
+	public function updateFavoriteList(Request $request)
 	{
 		$data = $request->all();
+
+		$questionResult = $data['question_id'];
+        $result = explode(',', $questionResult);
+
+        for ($i = 0; $i < count($result); $i++) {
+        	Favorite::where('user_id', $data['user_id'])->where('question_id', $result[$i])->delete();
+        }
+
+        $Favoritelist = Favorite::where('user_id', $data['user_id'])->get();
+
+		for ($i = 0; $i < count($Favoritelist); $i++) {
+			$Favoritelist[$i]['question'] = Question::where('id', $Favoritelist[$i]['question_id'])->first();
+			$Favoritelist[$i]['question']['fuckyou'] = 0;
+			$Favoritelist[$i]['question']['fuck'] = 0;
+
+		}
+
+		return response()->json([
+            'RetCode' => '1', 
+            'Content' => $Favoritelist
+            ]);
 	}
 }

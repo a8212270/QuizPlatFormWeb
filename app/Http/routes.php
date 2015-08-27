@@ -95,13 +95,14 @@ Route::get('questions/showResult', ['middleware' => 'login', 'uses' => 'Question
 
 Route::post('mobileRegister', 'MobileController@postRegister');
 Route::post('mobileLogin', 'MobileController@postLogin');
+
 Route::any('stage/getCategoryList', 'CategoryController@getCategoryList');
 Route::any('stage/getStageList', 'StageController@getStageList');
 
 Route::any('rank', 'RankController@getRank');
 
 Route::any('favorite/getFavoriteList', 'FavoriteController@getFavoriteList');
-Route::any('favorite/uploadFavoriteList', 'FavoriteController@uploadFavoriteList');
+Route::any('favorite/updateFavoriteList', 'FavoriteController@updateFavoriteList');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
