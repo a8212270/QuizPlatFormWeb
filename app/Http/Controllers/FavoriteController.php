@@ -19,6 +19,8 @@ class FavoriteController extends Controller {
 		for ($i = 0; $i < count($Favoritelist); $i++) {
 			$Favoritelist[$i]['question'] = Question::where('id', $Favoritelist[$i]['question_id'])->first();
 			$Favoritelist[$i]['question']['favorite'] = 1;
+			$Favoritelist[$i]['question']['practice'] = 0;
+			$Favoritelist[$i]['question']['delete'] = 0;
 		}
 
 		return response()->json([
@@ -43,6 +45,8 @@ class FavoriteController extends Controller {
 		for ($i = 0; $i < count($Favoritelist); $i++) {
 			$Favoritelist[$i]['question'] = Question::where('id', $Favoritelist[$i]['question_id'])->first();
 			$Favoritelist[$i]['question']['favorite'] = 1;
+			$Favoritelist[$i]['question']['practice'] = 0;
+			$Favoritelist[$i]['question']['delete'] = 0;
 		}
 
 		return response()->json([
